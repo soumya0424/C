@@ -31,10 +31,15 @@ int main(int argc, char *argv[]) {
     char *destinationFile = argv[3];
 
     FILE *inFile = fopen(sourceFile, "r");
-    FILE *outFile = fopen(destinationFile, "w");
+    if (inFile == NULL) {
+        perror("Error opening source file");
+        return 1;
+    }
 
-    if (inFile == NULL || outFile == NULL) {
-        printf("Error opening file.\n");
+    FILE *outFile = fopen(destinationFile, "w");
+    if (outFile == NULL) {
+        perror("Error opening destination file");
+        fclose(inFile);
         return 1;
     }
 
@@ -49,7 +54,7 @@ int main(int argc, char *argv[]) {
     // Display the contents of the output file
     outFile = fopen(destinationFile, "r");
     if (outFile == NULL) {
-        printf("Error opening output file.\n");
+        perror("Error opening output file for reading");
         return 1;
     }
 
