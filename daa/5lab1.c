@@ -57,16 +57,26 @@ float fractionalKnapsack(ITEM items[], int n, float capacity) {
 }
 
 int main() {
-    int n = 3;
-    ITEM items[] = {{1, 60, 10, 6}, {2, 100, 20, 5}, {3, 120, 30, 4}};
+    int n;
+    printf("Enter the number of items: ");
+    scanf("%d", &n);
+
+    ITEM items[n];
 
     for (int i = 0; i < n; i++) {
+        items[i].item_id = i + 1;
+        printf("Enter the profit and weight of item no %d: ", i + 1);
+        scanf("%f %f", &items[i].item_profit, &items[i].item_weight);
         items[i].profit_weight_ratio = items[i].item_profit / items[i].item_weight;
     }
 
-    float capacity = 50.0;
+    float capacity;
+    printf("Enter the capacity of knapsack: ");
+    scanf("%f", &capacity);
+
     float max_profit = fractionalKnapsack(items, n, capacity);
 
     printf("Maximum profit: %.2f\n", max_profit);
     return 0;
 }
+

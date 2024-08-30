@@ -81,33 +81,38 @@ Node* buildHuffmanTree(SYMBOL symbols[], int size) {
     return extractMin(minHeap);
 }
 
-void printCodes(Node* root, int arr[], int top) {
-    if (root->left) {
-        arr[top] = 0;
-        printCodes(root->left, arr, top + 1);
-    }
-
-    if (root->right) {
-        arr[top] = 1;
-        printCodes(root->right, arr, top + 1);
-    }
-
-    if (!(root->left) && !(root->right)) {
-        printf("%c: ", root->symbol.alphabet);
-        for (int i = 0; i < top; ++i)
-            printf("%d", arr[i]);
-        printf("\n");
-    }
+void inOrderTraversal(Node* root) {
+    if (root == NULL)
+        return;
+    inOrderTraversal(root->left);
+    if (root->symbol.alphabet != '$') // To avoid printing internal nodes with '$'
+        printf("%c ", root->symbol.alphabet);
+    inOrderTraversal(root->right);
 }
 
 int main() {
-    SYMBOL symbols[] = {{'a', 5}, {'b', 9}, {'c', 12}, {'d', 13}, {'e', 16}, {'f', 45}};
-    int size = sizeof(symbols) / sizeof(symbols[0]);
+    int size;
+    printf("Enter the number of distinct alphabets: ");
+    scanf("%d", &size);
+
+    SYMBOL symbols[size];
+
+    printf("Enter the alphabets: ");
+    for (int i = 0; i < size; i++) {
+        scanf(" %c", &symbols[i].alphabet); // Space before %c to consume any trailing whitespace
+    }
+
+    printf("Enter their frequencies: ");
+    for (int i = 0; i < size; i++) {
+        scanf("%d", &symbols[i].frequency);
+    }
 
     Node* root = buildHuffmanTree(symbols, size);
 
-    int arr[100], top = 0;
-    printCodes(root, arr, top);
+    printf("In-order traversal of the tree (Huffman): ");
+    inOrderTraversal(root);
+    printf("\n");
 
     return 0;
 }
+
