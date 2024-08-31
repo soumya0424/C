@@ -123,7 +123,22 @@ int main() {
 }
 
 
-//Without file handling
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Without file handling
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
